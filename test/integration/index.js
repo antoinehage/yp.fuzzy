@@ -34,7 +34,7 @@ describe("FUZZY SERVICE API TESTS", function () {
             });
         });
 
-        it('fail - wrong mathod', function (done) {
+        it('fail - wrong method', function (done) {
             var params = {
                 uri: 'http://127.0.0.1:4500/metrics?m=antoine&w1=healed&w2=sealed'
             };
@@ -207,6 +207,23 @@ describe("FUZZY SERVICE API TESTS", function () {
             });
         });
 
+        it('fail - wrong method', function (done) {
+            var params = {
+                uri: 'http://127.0.0.1:4500/stemmers?m=antoine&w=healed'
+            };
+            helper.requester('get', params, function (err, body, req) {
+                assert.ifError(err);
+                assert.ok(body);
+                assert.equal(body.result, false);
+                assert.ok(body.errors);
+                assert.deepEqual(body.errors.details[0], {
+                    "code": 173,
+                    "message": "Validation failed for field: m -> The parameter 'm' failed due to: instance is not one of enum values: lancaster,lovins,porter,schinke"
+                });
+                done();
+            });
+        });
+
         it('success - lancaster', function (done) {
             var params = {
                 uri: 'http://127.0.0.1:4500/stemmers?m=lancaster&w=worker'
@@ -275,6 +292,23 @@ describe("FUZZY SERVICE API TESTS", function () {
                 assert.equal(body.result, false);
                 assert.ok(body.errors);
                 assert.deepEqual(body.errors.details[0], {"code": 172, "message": "Missing required field: w, m"});
+                done();
+            });
+        });
+
+        it('fail - wrong method', function (done) {
+            var params = {
+                uri: 'http://127.0.0.1:4500/phonetics?m=antoine&w=healed'
+            };
+            helper.requester('get', params, function (err, body, req) {
+                assert.ifError(err);
+                assert.ok(body);
+                assert.equal(body.result, false);
+                assert.ok(body.errors);
+                assert.deepEqual(body.errors.details[0], {
+                    "code": 173,
+                    "message": "Validation failed for field: m -> The parameter 'm' failed due to: instance is not one of enum values: metaphone,double_metaphone,soundex,nysiis,caverphone,cologne,mra_codex"
+                });
                 done();
             });
         });

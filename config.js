@@ -32,6 +32,15 @@ module.exports = {
                     "type": "string",
                     "enum": ['dice', 'sorensen', 'levenshtein', 'hamming', 'jaccard', 'tanimoto', 'jaro', 'jaro_winkler', 'mra_comparison', 'tversky']
                 }
+            },
+            "ln": {
+                "source": ['query.ln'],
+                "required": false,
+                "default": "en",
+                "validation": {
+                    "type": "string",
+                    "enum": ['en', 'fr']
+                }
             }
         },
         "/stemmers": {
@@ -52,6 +61,15 @@ module.exports = {
                     "type": "string",
                     "enum": ['lancaster', 'lovins', 'porter', 'schinke']
                 }
+            },
+            "ln": {
+                "source": ['query.ln'],
+                "required": false,
+                "default": "en",
+                "validation": {
+                    "type": "string",
+                    "enum": ['en', 'fr']
+                }
             }
         },
         "/phonetics": {
@@ -71,6 +89,15 @@ module.exports = {
                 "validation": {
                     "type": "string",
                     "enum": ['metaphone', 'double_metaphone', 'soundex', 'nysiis', 'caverphone', 'cologne', 'mra_codex']
+                }
+            },
+            "ln": {
+                "source": ['query.ln'],
+                "required": false,
+                "default": "en",
+                "validation": {
+                    "type": "string",
+                    "enum": ['en', 'fr']
                 }
             }
         }

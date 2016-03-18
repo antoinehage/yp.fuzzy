@@ -16,7 +16,8 @@
   "scripts": {
   },
   "dependencies": {
-    "clj-fuzzy" : "*"
+    "clj-fuzzy" : "*",
+    "keyword-extractor" : "*"
   },
   "peerDependencies": {
     "soajs": "0.2.*"

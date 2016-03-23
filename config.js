@@ -4,7 +4,19 @@ module.exports = {
     serviceName: "yp.fuzzy",
     serviceVersion : 1,
     servicePort: 4500,
+    serviceGroup: "YP Group",
     extKeyRequired: false,
+    type: "service",
+    multi: null, //not necessary
+    prerequisites: {
+        cpu: '',
+        memory: ''
+    },
+    src: {
+        repo: 'yp.fuzzy',
+        owner: 'antoinehage',
+        main: '/index.js'
+    },
     "errors": {},
     "schema": {
         "/metrics": {

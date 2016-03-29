@@ -410,5 +410,39 @@ describe("FUZZY SERVICE API TESTS", function () {
                 done();
             });
         });
+
+
+    });
+    describe("Match route", function () {
+        it('success - match with default settings', function (done) {
+            var params = {
+                uri: 'http://127.0.0.1:4500/match?n1=The%20Butter%20churNing%20Service&n2=Service%20for%20churning%20butter'
+            };
+            helper.requester('get', params, function (err, body, req) {
+                console.log(body);
+                assert.ifError(err);
+                assert.ok(body);
+                assert.equal(body.result, true);
+                assert.ok(body.data);
+                assert.ok(body.data.answer);
+                done();
+            });
+        });
+
+        it('success - match with default', function (done) {
+            var params = {
+                uri: 'http://127.0.0.1:4500/match?n1=Butter%20and%20toast%20breakfeast%20service&n2=The%20Butter%20churNing%20Service'
+            };
+            helper.requester('get', params, function (err, body, req) {
+                console.log(body);
+                assert.ifError(err);
+                assert.ok(body);
+                assert.equal(body.result, true);
+                assert.ok(body.data);
+                assert.equal(body.data.answer, false);
+                done();
+            });
+        });
+
     });
 });

@@ -7,15 +7,9 @@ module.exports = {
     serviceGroup: "YP Group",
     extKeyRequired: false,
     type: "service",
-    multi: null, //not necessary
     prerequisites: {
         cpu: '',
         memory: ''
-    },
-    src: {
-        repo: 'yp.fuzzy',
-        owner: 'antoinehage',
-        main: '/index.js'
     },
     "errors": {},
     "schema": {

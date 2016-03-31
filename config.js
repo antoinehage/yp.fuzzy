@@ -3,7 +3,7 @@
 module.exports = {
     serviceName: "yp.fuzzy",
     serviceVersion : 1,
-    servicePort: 4501,
+    servicePort: 4100,
     serviceGroup: "YP Group",
     extKeyRequired: false,
     type: "service",

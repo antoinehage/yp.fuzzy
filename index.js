@@ -47,7 +47,7 @@ service.init(function () {
         var algo = req.soajs.inputmaskData.m;
         var answer = clj_fuzzy.metrics[algo](n1, n2);
         console.log("----> " + req.soajs.inputmaskData.ln + " / " + n1 + " / " + n2 + " / " + algo + " / " + answer);
-        res.jsonp(req.soajs.buildResponse(null, {"answer": (answer >= 0.75)}));
+        res.jsonp(req.soajs.buildResponse(null, {"answer": (answer >= 0.80)}));
     });
 
     service.start();

@@ -41,5 +41,14 @@ service.init(function () {
         res.jsonp(req.soajs.buildResponse(null, {"answer": answer}));
     });
 
+    service.get("/match", function (req, res) {
+        var n1 = lib.extractorino(req.soajs.inputmaskData.ln, req.soajs.inputmaskData.n1);
+        var n2 = lib.extractorino(req.soajs.inputmaskData.ln, req.soajs.inputmaskData.n2);
+        var algo = req.soajs.inputmaskData.m;
+        var answer = clj_fuzzy.metrics[algo](n1, n2);
+        console.log("----> " + req.soajs.inputmaskData.ln + " / " + n1 + " / " + n2 + " / " + algo + " / " + answer);
+        res.jsonp(req.soajs.buildResponse(null, {"answer": (answer >= 0.80)}));
+    });
+
     service.start();
 });

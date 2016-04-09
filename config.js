@@ -3,8 +3,14 @@
 module.exports = {
     serviceName: "yp.fuzzy",
     serviceVersion : 1,
-    servicePort: 4500,
+    servicePort: 4100,
+    serviceGroup: "YP Group",
     extKeyRequired: false,
+    type: "service",
+    prerequisites: {
+        cpu: '',
+        memory: ''
+    },
     "errors": {},
     "schema": {
         "/metrics": {
@@ -98,6 +104,43 @@ module.exports = {
                 "validation": {
                     "type": "string",
                     "enum": ['en', 'fr']
+                }
+            }
+        },
+        "/match": {
+            "_apiInfo": {
+                "l": "Business name matching api"
+            },
+            "n1": {
+                "source": ['query.n1'],
+                "required": true,
+                "validation": {
+                    "type": "string"
+                }
+            },
+            "n2": {
+                "source": ['query.n2'],
+                "required": true,
+                "validation": {
+                    "type": "string"
+                }
+            },
+            "ln": {
+                "source": ['query.ln'],
+                "required": false,
+                "default": "en",
+                "validation": {
+                    "type": "string",
+                    "enum": ['en', 'fr']
+                }
+            },
+            "m": {
+                "source": ['query.m'],
+                "required": false,
+                "default": "jaro",
+                "validation": {
+                    "type": "string",
+                    "enum": ['dice', 'sorensen', 'levenshtein', 'hamming', 'jaccard', 'tanimoto', 'jaro', 'jaro_winkler', 'mra_comparison', 'tversky']
                 }
             }
         }

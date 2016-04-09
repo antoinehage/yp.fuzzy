@@ -3,7 +3,9 @@
 var assert = require('assert');
 var request = require("request");
 var helper = require("../helper.js");
+var loop = require("lodash");
 var srv = helper.requireModule('index');
+var testcases = require("./testdata.json");
 
 describe("FUZZY SERVICE API TESTS", function () {
 
@@ -22,7 +24,7 @@ describe("FUZZY SERVICE API TESTS", function () {
     describe("metrics route", function () {
         it('fail - no params', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics/'
+                uri: 'http://127.0.0.1:4100/metrics/'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -36,7 +38,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('fail - wrong method', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=antoine&w1=healed&w2=sealed'
+                uri: 'http://127.0.0.1:4100/metrics?m=antoine&w1=healed&w2=sealed'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -53,7 +55,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - dice', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=dice&w1=healed&w2=sealed'
+                uri: 'http://127.0.0.1:4100/metrics?m=dice&w1=healed&w2=sealed'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -67,7 +69,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - sorensen', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=sorensen&w1=healed&w2=sealed'
+                uri: 'http://127.0.0.1:4100/metrics?m=sorensen&w1=healed&w2=sealed'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -81,7 +83,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - levenshtein', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=levenshtein&w1=book&w2=back'
+                uri: 'http://127.0.0.1:4100/metrics?m=levenshtein&w1=book&w2=back'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -95,7 +97,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - hamming', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=hamming&w1=ramer&w2=cases'
+                uri: 'http://127.0.0.1:4100/metrics?m=hamming&w1=ramer&w2=cases'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -109,7 +111,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - jaccard', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=jaccard&w1=night&w2=nacht'
+                uri: 'http://127.0.0.1:4100/metrics?m=jaccard&w1=night&w2=nacht'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -123,7 +125,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - tanimoto', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=tanimoto&w1=night&w2=nacht'
+                uri: 'http://127.0.0.1:4100/metrics?m=tanimoto&w1=night&w2=nacht'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -137,7 +139,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - jaro', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=jaro&w1=Dwayne&w2=Duane'
+                uri: 'http://127.0.0.1:4100/metrics?m=jaro&w1=Dwayne&w2=Duane'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -151,7 +153,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - jaro_winkler', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=jaro_winkler&w1=Dwayne&w2=Dwayne'
+                uri: 'http://127.0.0.1:4100/metrics?m=jaro_winkler&w1=Dwayne&w2=Dwayne'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -165,7 +167,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - mra_comparison', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=mra_comparison&w1=Byrne&w2=Boern'
+                uri: 'http://127.0.0.1:4100/metrics?m=mra_comparison&w1=Byrne&w2=Boern'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -179,7 +181,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - tversky', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/metrics?m=tversky&w1=night&w2=nacht'
+                uri: 'http://127.0.0.1:4100/metrics?m=tversky&w1=night&w2=nacht'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -195,7 +197,7 @@ describe("FUZZY SERVICE API TESTS", function () {
     describe("stemmers route", function () {
         it('fail - no params', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers/'
+                uri: 'http://127.0.0.1:4100/stemmers/'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -209,7 +211,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('fail - wrong method', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers?m=antoine&w=healed'
+                uri: 'http://127.0.0.1:4100/stemmers?m=antoine&w=healed'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -226,7 +228,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - lancaster', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers?m=lancaster&w=worker'
+                uri: 'http://127.0.0.1:4100/stemmers?m=lancaster&w=worker'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -240,7 +242,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - lovins', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers?m=lovins&w=nationality'
+                uri: 'http://127.0.0.1:4100/stemmers?m=lovins&w=nationality'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -254,7 +256,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - porter', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers?m=porter&w=adjective'
+                uri: 'http://127.0.0.1:4100/stemmers?m=porter&w=adjective'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -268,7 +270,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - schinke', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/stemmers?m=schinke&w=apparebunt'
+                uri: 'http://127.0.0.1:4100/stemmers?m=schinke&w=apparebunt'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -284,7 +286,7 @@ describe("FUZZY SERVICE API TESTS", function () {
     describe("phonetics route", function () {
         it('fail - no params', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics/'
+                uri: 'http://127.0.0.1:4100/phonetics/'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -298,7 +300,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('fail - wrong method', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=antoine&w=healed'
+                uri: 'http://127.0.0.1:4100/phonetics?m=antoine&w=healed'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -315,7 +317,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - lancaster', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=metaphone&w=hypocrite'
+                uri: 'http://127.0.0.1:4100/phonetics?m=metaphone&w=hypocrite'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -329,7 +331,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - double_metaphone', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=double_metaphone&w=Smith'
+                uri: 'http://127.0.0.1:4100/phonetics?m=double_metaphone&w=Smith'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -343,7 +345,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - soundex', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=soundex&w=Ashcroft'
+                uri: 'http://127.0.0.1:4100/phonetics?m=soundex&w=Ashcroft'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -357,7 +359,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - nysiis', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=nysiis&w=Andrew'
+                uri: 'http://127.0.0.1:4100/phonetics?m=nysiis&w=Andrew'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -371,7 +373,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - caverphone', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=caverphone&w=Henrichsen'
+                uri: 'http://127.0.0.1:4100/phonetics?m=caverphone&w=Henrichsen'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -385,7 +387,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - cologne', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=cologne&w=Breschnew'
+                uri: 'http://127.0.0.1:4100/phonetics?m=cologne&w=Breschnew'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -399,7 +401,7 @@ describe("FUZZY SERVICE API TESTS", function () {
 
         it('success - mra_codex', function (done) {
             var params = {
-                uri: 'http://127.0.0.1:4500/phonetics?m=mra_codex&w=Catherine'
+                uri: 'http://127.0.0.1:4100/phonetics?m=mra_codex&w=Catherine'
             };
             helper.requester('get', params, function (err, body, req) {
                 assert.ifError(err);
@@ -410,5 +412,26 @@ describe("FUZZY SERVICE API TESTS", function () {
                 done();
             });
         });
+
+
+    });
+
+    describe("Match route", function () {
+        loop.forEach(testcases, function (testcase, index) {
+            it('success - match with default settings', function (done) {
+                var params = {
+                    uri: 'http://127.0.0.1:4100/match?n1=' + testcase["names"][0] + '&n2=' + testcase["names"][1]
+                };
+                helper.requester('get', params, function (err, body, req) {
+                    assert.ifError(err);
+                    assert.ok(body);
+                    assert.equal(body.result, true);
+                    assert.equal(body.data.answer, testcase["match"]);
+                    done();
+                });
+            })
+        });
+
+
     });
 });

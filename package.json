@@ -17,10 +17,8 @@
   },
   "dependencies": {
     "clj-fuzzy" : "*",
-    "keyword-extractor" : "*"
-  },
-  "peerDependencies": {
-    "soajs": "0.2.*"
+    "keyword-extractor" : "*",
+    "soajs": "git+https://github.com/soajs/soajs.git#develop"
   },
   "devDependencies": {
     "grunt":"0.4.5",
